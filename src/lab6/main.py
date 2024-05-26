@@ -34,67 +34,83 @@ class DataBase(object):
         return result
 
 
-@app.get("/api/allusers")
-async def get_users():
+@app.get("/api/allmedia")
+async def get_media():
     db = DataBase()
-    return JSONResponse(db.execute('SELECT * FROM user'))
+    return JSONResponse(db.execute('SELECT * FROM media'))
 
 
-@app.get("/api/allrequest")
-async def get_users():
+@app.get('/api/media/{id}')
+def get_media_by_id(id):
     db = DataBase()
-    return JSONResponse(db.execute('SELECT * FROM request'))
-
-
-@app.get('/api/user/{id}')
-def get_user_by_id(id):
-    db = DataBase()
-    result = db.execute(f'SELECT * FROM user WHERE id={id}')
+    result = db.execute(f'SELECT * FROM media WHERE id={id}')
     if not result:
         raise fastapi.HTTPException(status_code=404)
     return JSONResponse(result)
 
 
-@app.post('/api/addrequest', status_code=201)
-async def add_new_request(req: Request):
+@app.put('/api/updatemedia/{id}')
+async def update_media(id, req: Request):
+    req_dict = await req.json()
+    db = DataBase()
+    for key in req_dict:
+        if not db.execute(f'SELECT * FROM media WHERE id={id}'):
+            raise fastapi.HTTPException(status_code=404)
+        db.execute(f"UPDATE media SET {key}='{req_dict[key]}' WHERE id={id}")
+    return {"message": f'Media {id} was successfully updated!'}
+
+
+@app.delete('/api/deletemedia/{id}')
+def delete_media(id):
+    db = DataBase()
+    db.execute(f"DELETE FROM request WHERE media_id={id}")
+    db.execute(f"DELETE FROM media WHERE id={id}")
+    db.connection.commit()
+    return {'message': f'Media {id} was successfully deleted!'}
+
+
+
+
+@app.get("/api/allroles")
+async def get_role():
+    db = DataBase()
+    return JSONResponse(db.execute('SELECT * FROM role'))
+
+
+@app.get('/api/role/{id}')
+def get_role_by_id(id):
+    db = DataBase()
+    result = db.execute(f'SELECT * FROM role WHERE id={id}')
+    if not result:
+        raise fastapi.HTTPException(status_code=404)
+    return JSONResponse(result)
+
+
+@app.post('/api/addrole', status_code=201)
+async def add_new_role(req: Request):
     req_dict = await req.json()
     try:
         id = req_dict['id']
         name = req_dict['name']
         description = req_dict['description']
-        created = req_dict['created']
-        media_id = req_dict['media_id']
-        user_id = req_dict['user_id']
     except KeyError:
-        raise fastapi.HTTPException(status_code=400, detail="Missing required fields")
-
+        raise fastapi.HTTPException(status_code=400, detail="Missing required fields!")
     db = DataBase()
     try:
         db.execute(
-            f"INSERT INTO `request` (`id`, `name`, `description`, `created`, `media_id`, `user_id`) "
-            f"VALUES ({id}, '{name}', '{description}', '{created}', {media_id}, {user_id});"
-        )
+            f"INSERT INTO `role` (`id`, `name`, `description`)"
+            f"VALUES ({id}, '{name}', '{description}');")
     except Exception as e:
         raise fastapi.HTTPException(status_code=500, detail=str(e))
+    return {'message': 'New role was successfully added!'}
 
-    return {'message': 'New request added!'}
 
-
-@app.put('/api/updateuser/{id}')
-async def update_user(id, req: Request):
+@app.put('/api/updaterole/{id}')
+async def update_role(id, req: Request):
     req_dict = await req.json()
     db = DataBase()
     for key in req_dict:
-        if not db.execute(f'SELECT * FROM user WHERE id={id}'):
+        if not db.execute(f'SELECT * FROM role WHERE id={id}'):
             raise fastapi.HTTPException(status_code=404)
-        db.execute(f"UPDATE user SET {key}='{req_dict[key]}' WHERE id={id}")
-    return {"message": 'Updated!'}
-
-
-@app.delete('/api/deleteuser/{id}')
-def delete(id):
-    db = DataBase()
-    if not db.execute(f'SELECT * FROM user WHERE id={id}'):
-        raise fastapi.HTTPException(status_code=404)
-    db.execute(f"DELETE FROM `user` WHERE id={id}")
-    return {'message': f'User with id={id} deleted'}
+        db.execute(f"UPDATE role SET {key}='{req_dict[key]}' WHERE id={id}")
+    return {"message": f'Role {id} was successfully updated!'}

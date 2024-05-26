@@ -1,5 +1,6 @@
-# SQL-скрипти
+# SQL-скрипт
 
+``` sql
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -23,10 +24,10 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `mydb`.`role` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`role` (
-`id` INT NOT NULL,
-`name` VARCHAR(45) NULL,
-`description` VARCHAR(45) NULL,
-PRIMARY KEY (`id`))
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -36,19 +37,19 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
-`id` INT NOT NULL,
-`name` VARCHAR(45) NULL,
-`login` VARCHAR(45) NULL,
-`password` VARCHAR(45) NULL,
-`email` VARCHAR(45) NULL,
-`role_id` INT NOT NULL,
-PRIMARY KEY (`id`),
-INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
-CONSTRAINT `fk_user_role1`
-FOREIGN KEY (`role_id`)
-REFERENCES `mydb`.`role` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION)
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `login` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `role_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `mydb`.`role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -58,12 +59,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`originalSource` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`originalSource` (
-`id` INT NOT NULL,
-`name` VARCHAR(45) NULL,
-`type` VARCHAR(45) NULL,
-`url` VARCHAR(45) NULL,
-`rating` INT NULL,
-PRIMARY KEY (`id`))
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `type` VARCHAR(45) NULL,
+  `url` VARCHAR(45) NULL,
+  `rating` INT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -73,19 +74,19 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`media` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`media` (
-`id` INT NOT NULL,
-`name` VARCHAR(45) NULL,
-`type` VARCHAR(45) NULL,
-`url` VARCHAR(45) NULL,
-`metadata` VARCHAR(45) NULL,
-`originalSource_id` INT NOT NULL,
-PRIMARY KEY (`id`, `originalSource_id`),
-INDEX `fk_media_originalSource1_idx` (`originalSource_id` ASC) VISIBLE,
-CONSTRAINT `fk_media_originalSource1`
-FOREIGN KEY (`originalSource_id`)
-REFERENCES `mydb`.`originalSource` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION)
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `type` VARCHAR(45) NULL,
+  `url` VARCHAR(45) NULL,
+  `metadata` VARCHAR(45) NULL,
+  `originalSource_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `originalSource_id`),
+  INDEX `fk_media_originalSource1_idx` (`originalSource_id` ASC) VISIBLE,
+  CONSTRAINT `fk_media_originalSource1`
+    FOREIGN KEY (`originalSource_id`)
+    REFERENCES `mydb`.`originalSource` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -95,25 +96,25 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`request` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`request` (
-`id` INT NOT NULL,
-`name` VARCHAR(45) NULL,
-`description` VARCHAR(45) NULL,
-`created` VARCHAR(45) NULL,
-`media_id` INT NOT NULL,
-`user_id` INT NOT NULL,
-PRIMARY KEY (`id`, `media_id`),
-INDEX `fk_request_media1_idx` (`media_id` ASC) VISIBLE,
-INDEX `fk_request_user1_idx` (`user_id` ASC) VISIBLE,
-CONSTRAINT `fk_request_media1`
-FOREIGN KEY (`media_id`)
-REFERENCES `mydb`.`media` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION,
-CONSTRAINT `fk_request_user1`
-FOREIGN KEY (`user_id`)
-REFERENCES `mydb`.`user` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION)
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
+  `created` VARCHAR(45) NULL,
+  `media_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `media_id`),
+  INDEX `fk_request_media1_idx` (`media_id` ASC) VISIBLE,
+  INDEX `fk_request_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_request_media1`
+    FOREIGN KEY (`media_id`)
+    REFERENCES `mydb`.`media` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -123,24 +124,24 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`requestResult` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`requestResult` (
-`id` INT NOT NULL,
-`description` VARCHAR(45) NULL,
-`rating` VARCHAR(45) NULL,
-`request_id` INT NOT NULL,
-`user_id` INT NOT NULL,
-PRIMARY KEY (`id`, `request_id`),
-INDEX `fk_requestResult_request1_idx` (`request_id` ASC) VISIBLE,
-INDEX `fk_requestResult_user1_idx` (`user_id` ASC) VISIBLE,
-CONSTRAINT `fk_requestResult_request1`
-FOREIGN KEY (`request_id`)
-REFERENCES `mydb`.`request` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION,
-CONSTRAINT `fk_requestResult_user1`
-FOREIGN KEY (`user_id`)
-REFERENCES `mydb`.`user` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION)
+  `id` INT NOT NULL,
+  `description` VARCHAR(45) NULL,
+  `rating` VARCHAR(45) NULL,
+  `request_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `request_id`),
+  INDEX `fk_requestResult_request1_idx` (`request_id` ASC) VISIBLE,
+  INDEX `fk_requestResult_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_requestResult_request1`
+    FOREIGN KEY (`request_id`)
+    REFERENCES `mydb`.`request` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_requestResult_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -181,7 +182,7 @@ INSERT INTO `mydb`.`originalSource` (`id`,`name`,`type`,`url`,`rating`) VALUES (
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `mydb`.`meida`
+-- Data for table `mydb`.`media`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
@@ -199,7 +200,6 @@ USE `mydb`;
 INSERT INTO `mydb`.`request` (`id`, `name`, `description`, `created`, `media_id`, `user_id`) VALUES (1, 'Text search', 'desc', '2024-05-18', 1,1);
 INSERT INTO `mydb`.`request` (`id`, `name`, `description`, `created`,`media_id`, `user_id`) VALUES (2, 'Video search', 'desc', '2024-05-18', 2,2);
 
-
 COMMIT;
 
 -- -----------------------------------------------------
@@ -211,4 +211,4 @@ INSERT INTO `mydb`.`requestResult` (`id`,`description`, `rating`, `request_id`, 
 INSERT INTO `mydb`.`requestResult` (`id`,`description`, `rating`, `request_id`, `user_id`) VALUES (2, 'desc2', 'rait2', 2,2);
 
 COMMIT;
-
+```

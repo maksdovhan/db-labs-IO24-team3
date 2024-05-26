@@ -4,38 +4,64 @@
 
 ### GET
 
-#### Пошук 
-![alt text](./images/userid.png)
+#### GET /media/{id}
 
+![alt text](./photos/Media/media1.png)
 
-### POST 
-#### Перед запитом
-![alt text](./images/allrequest.png)
+#### GET /role/{id}
 
-#### Запит
-![alt text](./images/addrequest.png)
+![alt text](./photos/Role/role1.png)
 
-#### Після запиту
-![alt text](./images/allrequestafter.png)
+### POST
+
+#### GET /allroles
+
+![alt text](./photos/Role/allroles.png)
+
+#### POST /addrole
+
+![alt text](./photos/Role/addrole.png)
+
+#### GET /allroles
+
+![alt text](./photos/Role/allroles1.png)
 
 ### PUT
 
-#### Перед запитом
-![alt text](./images/allusers.png)
+#### GET /media/{id}
 
-#### Запит
-![alt text](./images/updateuser.png)
+![alt text](./photos/Media/media1.png)
 
-#### Після запиту
-![alt text](./images/allusersafter.png)
+#### PUT /updatemedia/{id}
+
+![alt text](./photos/Media/updatemedia1.png)
+
+#### GET /media/{id}
+
+![alt text](./photos/Media/media1new.png)
+
+#### GET /role/{id}
+
+![alt text](./photos/Role/role2.png)
+
+#### PUT /updaterole/{id}
+
+![alt text](./photos/Role/updaterole2.png)
+
+#### GET /role/{id}
+
+![alt text](./photos/Role/newrole2.png)
 
 ### DELETE
 
-#### Перед запитом
-![alt text](./images/allusersafter.png)
+#### GET /allmedia
 
-#### Запит
-![alt text](./images/deleteuser.png)
+![alt text](./photos/Media/allmedia1.png)
 
-#### Після запиту
-![alt text](./images/allusersafter2.png)
+#### DELETE /deletemedia/{id}
+
+![alt text](./photos/Media/deletemedia.png)
+
+#### GET /allmedia
+
+![alt text](./photos/Media/allmedia2.png)

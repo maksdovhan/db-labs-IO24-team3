@@ -9,9 +9,9 @@ footer: "ECL 2.0 Licensed | Copyright © [2024] [Йорж Макисм]"
 
 **Виконав:** 
 
-*студент 2-го курсу, групи ІО-24*<span padding-right:5em></span> 
+*студент 2-го курсу, групи ІО-24:*<span padding-right:5em></span> 
 
-**Йорж Максим [Telegram](https://t.me/maksirh)**
+**Довгань Максим [Telegram](https://t.me/rusnyahuynya)**
 
 **Керівник**
 
